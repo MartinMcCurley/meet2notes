@@ -40,7 +40,12 @@ cd meet2notes
 pip install -r requirements.txt
 ```
 
-3. Copy `.env.example` to `.env` and set your OpenAI API key:
+3. (Optional) Install as a package:
+```bash
+pip install -e .
+```
+
+4. Copy `.env.example` to `.env` and set your OpenAI API key:
 ```bash
 cp .env.example .env
 # Edit .env with your API key
@@ -53,11 +58,14 @@ cp .env.example .env
 The simplest way to use Meet2Notes is with the all-in-one runner script:
 
 ```bash
-# Process a meeting recording from start to finish
-python run.py your_meeting.mkv --model base --api-key YOUR_API_KEY
+# If installed as a package:
+meet2notes your_meeting.mkv --model base --api-key YOUR_API_KEY
+
+# Or using the module directly:
+python -m src.run your_meeting.mkv --model base --api-key YOUR_API_KEY
 
 # Skip summary generation (transcription only)
-python run.py your_meeting.mkv --model base --no-summary
+meet2notes your_meeting.mkv --model base --no-summary
 ```
 
 #### Step-by-Step Workflow
@@ -66,23 +74,23 @@ If you prefer more control, you can run each component separately:
 
 ```bash
 # 1. Extract audio from video
-python meeting2notes.py your_meeting.mkv
+python -m src.meeting2notes your_meeting.mkv
 
 # 2. Transcribe audio to text (with timestamps)
-python quick_transcribe.py --model base
+python -m src.quick_transcribe --model base
 
 # 3. Generate meeting notes with summary and action items
-python notes_generator.py --api-key YOUR_API_KEY
+python -m src.notes_generator --api-key YOUR_API_KEY
 ```
 
 #### Advanced Options
 
 ```bash
 # Use a higher quality transcription model
-python quick_transcribe.py --model small
+python -m src.quick_transcribe --model small
 
 # Customize output file names
-python notes_generator.py --transcript my_transcript.txt --output custom_notes.md
+python -m src.notes_generator --transcript my_transcript.txt --output custom_notes.md
 ```
 
 ## 🧩 Components
@@ -99,20 +107,25 @@ Meet2Notes consists of three main components:
 meet2notes/
 ├── docs/                     # Documentation
 │   └── images/               # Images for documentation
+├── examples/                 # Example files and demos
 ├── ffmpeg-7.1.1-essentials_build/  # FFmpeg binaries
 │   ├── bin/                  # Executable files
 │   └── ...
 ├── media/                    # Local meeting files (not tracked by git)
+├── src/                      # Source code
+│   ├── __init__.py           # Package initialization
+│   ├── meeting2notes.py      # Audio extraction script
+│   ├── notes_generator.py    # Meeting notes generation script
+│   ├── quick_transcribe.py   # Audio transcription script
+│   └── run.py                # All-in-one workflow script
+├── tests/                    # Test files
+│   └── __init__.py           # Test initialization
 ├── .env                      # Environment variables (not tracked by git)
 ├── .env.example              # Example environment file
 ├── .gitignore                # Git ignore patterns
 ├── LICENSE                   # MIT License
 ├── README.md                 # This file
-├── meeting2notes.py          # Audio extraction script
-├── notes_generator.py        # Meeting notes generation script
-├── quick_transcribe.py       # Audio transcription script
-├── requirements.txt          # Python dependencies
-└── run.py                   # All-in-one workflow script
+└── requirements.txt          # Python dependencies
 ```
 
 ## 📊 Example Output
