@@ -1,6 +1,8 @@
 # Meet2Notes
 
-<img src="docs/images/logo.png" alt="Meet2Notes Logo" width="200" align="right" />
+<p align="center">
+  <img src="docs/images/logo.png" alt="Meet2Notes Logo" width="300" />
+</p>
 
 ## 🚀 Your Meeting Recordings → Text + Summary in Minutes
 
